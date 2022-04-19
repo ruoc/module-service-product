@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_save_before">
+        <observer name="service_product_add_to_cart" instance="Ruoc\ServiceProduct\Observer\AddServiceProductToCart" />
+    </event>
+    <event name="checkout_cart_save_after">
+        <observer name="service_product_service_parent_id" instance="Ruoc\ServiceProduct\Observer\AddItemServiceParentId" />
+    </event>
+    <event name="sales_quote_remove_item">
+        <observer name="service_product_remove_item" instance="Ruoc\ServiceProduct\Observer\RemoveServiceProductFromCart" />
+    </event>
+    <event name="checkout_cart_product_update_after">
+        <observer name="service_product_update_item" instance="Ruoc\ServiceProduct\Observer\UpdateServiceProductInCart" />
+    </event>
+</config>

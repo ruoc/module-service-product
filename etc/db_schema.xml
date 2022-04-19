@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order_item" resource="default" engine="innodb">
+        <column xsi:type="int" name="service_parent_id" padding="10" unsigned="true" nullable="true" comment="Parent Of Service"/>
+    </table>
+    <table name="quote_item" resource="default" engine="innodb">
+        <column xsi:type="int" name="service_parent_id" padding="10" unsigned="true" nullable="true" comment="Parent Of Service"/>
+    </table>
+</schema>

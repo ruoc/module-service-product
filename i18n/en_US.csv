@@ -1,0 +1,19 @@
+"Related Products, Up-Sells, Cross-Sells and Service","Related Products, Up-Sells, Cross-Sells and Service"
+"Custom type products are shown to customers in addition to the item the customer is looking at.","Custom type products are shown to customers in addition to the item the customer is looking at."
+"Add Service Products","Add Service Products"
+"Service Products","Service Products"
+"Add to Cart","Add to Cart"
+Qty,Qty
+"Related Products","Related Products"
+"The total quantity is limited, not exceeding the number of main products.","The total quantity is limited, not exceeding the number of main products."
+SKU,SKU
+ID,ID
+Thumbnail,Thumbnail
+Name,Name
+"Attribute Set","Attribute Set"
+AttributeSetText,AttributeSetText
+Status,Status
+StatusText,StatusText
+Type,Type
+Price,Price
+"You are not allowed to purchase more service items than main products","You are not allowed to purchase more service items than main products"

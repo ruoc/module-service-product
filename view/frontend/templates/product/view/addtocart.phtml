@@ -1,0 +1,161 @@
+<?php
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) :?>
+    <?php $services = $block->getServiceProducts();?>
+    <?php if(!empty($services)):?>
+        <?php 
+            $blockPromo = $this->getLayout()->createBlock('\HomePro\SingleSalesPromotionIntegration\Block\Product\View\PromotionInfo'); 
+            $promoMessages = $blockPromo->getGroupPromotionMessage();
+        ?>
+        <div class="box-tocart has-service">
+            <div class="fieldset">
+                <div class="box-cart-mobile">
+                    <div class="box-cart-mb-inner">
+                        <?php if ($block->shouldRenderQuantity()) :?>
+                            <div class="field qty">
+                                <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                                <div class="control">
+                                    <button class="btn btn-remove-qty sys_btn_remove_qty" type="button">-</button>
+                                    <input type="number"
+                                        name="qty"
+                                        id="qty"
+                                        min="0"
+                                        value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                        title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                                        class="input-text qty"
+                                        data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                    />
+                                    <button class="btn btn-add-qty sys_btn_add_qty" type="button">+</button>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="actions">
+                            <div class="cart-action">
+                                <button type="submit"
+                                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                        class="action primary tocart"
+                                        id="product-addtocart-button" disabled>
+                                    <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                                </button>
+                            </div>
+                            <?= $block->getChildHtml('', true) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-product-wrapper" data-mage-init='{
+                    "collapsible":{
+                        "collapsible": true,
+                        "openedState": "active",
+                        "active": true
+                    }}'>
+                    <div data-role="title" class="title">
+                        <h4><?php echo __('Related Products');?></h4>
+                        <p>* <?= __('The total quantity is limited, not exceeding the number of main products.'); ?></p>
+                    </div>
+                    <div class="service-list" data-role="content">
+                        <?php foreach($services as $service):?>
+                        <div class="service-product">
+                            <div class="service-product-item">
+                                <input type="checkbox" class="service-product-selection" name="selected[<?php echo $service->getId();?>]" id="select-<?= $service->getId(); ?>"/>
+                                <div class="service-info">
+                                    <h4 class="product-name"><a href="<?= $service->getProductUrl() ?>" title="<?= $service->getName() ?>" target="_blank"><?php echo $service->getName();?></a></h4>
+                                    <div class="product-sku"><?php echo __('SKU') .': '. $service->getSku();?></div>
+                                    <div class="product-price"><?php echo $block->getProductPriceHtml($service,\Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE);?></div>
+                                    <?php 
+                                        $promoMessage = $blockPromo->getPromoMessageServiceBundle($promoMessages, $service->getId());
+                                        if(!empty($promoMessage)) : 
+                                    ?>
+                                        <div class="product-promo-message" style="color:red;"><?= $promoMessage ?></div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="field qty">
+                                    <div class="control service">
+                                        <button class="btn btn-remove-qty sys_btn_remove_qty" type="button" data-item="<?= $service->getId(); ?>">-</button>
+                                            <input type="number"
+                                                name="service_product[<?php echo $service->getId();?>]"
+                                                id="qty-<?= $service->getId(); ?>"
+                                                min="0"
+                                                value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                                title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                                                class="input-text qty"
+                                                readonly
+                                                data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                            />
+                                        <button class="btn btn-add-qty sys_btn_add_qty" type="button" data-item="<?= $service->getId(); ?>">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="box-tocart no-service">
+            <div class="fieldset">
+                <?php if ($block->shouldRenderQuantity()) :?>
+                    <div class="field qty">
+                        <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                        <div class="control">
+                            <button class="btn btn-remove-qty sys_btn_remove_qty" type="button">-</button>
+                            <input type="number"
+                                name="qty"
+                                id="qty"
+                                min="0"
+                                value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                                class="input-text qty"
+                                data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                            />
+                            <button class="btn btn-add-qty sys_btn_add_qty" type="button">+</button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="actions">
+                    <div class="cart-action">
+                        <button type="submit"
+                                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                class="action primary tocart"
+                                id="product-addtocart-button" disabled>
+                            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                        </button>
+                    </div>
+                    <?= $block->getChildHtml('', true) ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'jquery/validate',
+        'validation',
+        'mage/translate',
+        'domReady!'
+    ], function ($) {
+        var qtyField = $('input#qty');
+        if($(qtyField).length) {
+            $(qtyField).on('focusout', function(e) {
+                $(qtyField).validation();
+                if(!$(qtyField).validation('isValid')){
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+        }
+    });
+</script>

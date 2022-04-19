@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Product\CopyConstructor\Composite">
+        <arguments>
+            <argument name="constructors" xsi:type="array">
+                <item name="service" xsi:type="string">Ruoc\ServiceProduct\Model\Product\CopyConstructor\Service</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product\LinkTypeProvider">
+        <arguments>
+            <argument name="linkTypes" xsi:type="array">
+                <item name="service" xsi:type="const">Ruoc\ServiceProduct\Model\Product\Link::LINK_TYPE_SERVICE</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\ProductLink\CollectionProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="service" xsi:type="object">Ruoc\ServiceProduct\Model\ProductLink\CollectionProvider\Service</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="\Magento\Catalog\Block\Product\View" type="\Ruoc\ServiceProduct\Block\Product\View\Service"/>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="service_product_parent_service_id_item" type="Ruoc\ServiceProduct\Plugin\CopyParentServiceId"/>
+    </type>
+</config>
